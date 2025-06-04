@@ -17,20 +17,11 @@ public class PedidoService {
     }
 
     public Pedido salvar(Pedido pedido) {
-    // Validar campos obrigatórios
-    if (pedido.getNumeroPedido() == null || pedido.getNumeroPedido().isBlank()) {
-        throw new IllegalArgumentException("Número do pedido é obrigatório");
+        if (repo.existsByNumeroPedido(pedido.getNumeroPedido())) {
+            throw new IllegalArgumentException("Pedido já cadastrado");
+        }
+        return repo.save(pedido);
     }
-    if (repo.existsByNumeroPedido(pedido.getNumeroPedido())) {
-        throw new IllegalArgumentException("Pedido já cadastrado");
-    }
-    
-    // Garantir valores padrão para campos numéricos
-    if (pedido.getQuantidadePedidos() == null) pedido.setQuantidadePedidos(0);
-    if (pedido.getQuantidadeFaturados() == null) pedido.setQuantidadeFaturados(0);
-    
-    return repo.save(pedido);
-}
 
     public List<Pedido> listar() {
         return repo.findAll();
@@ -40,4 +31,3 @@ public class PedidoService {
         return repo.findById(id).orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
     }
 }
-

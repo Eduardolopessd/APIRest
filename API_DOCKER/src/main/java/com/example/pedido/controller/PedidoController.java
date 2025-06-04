@@ -1,6 +1,5 @@
 package com.example.pedido.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import com.example.pedido.model.Pedido;
 import com.example.pedido.service.PedidoService;
 import org.springframework.http.HttpStatus;
